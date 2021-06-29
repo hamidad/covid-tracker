@@ -1,12 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { PublicRoutingModule } from './public-routing.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [PublicRoutingModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class PublicModule { }
+export class PublicModule {}
