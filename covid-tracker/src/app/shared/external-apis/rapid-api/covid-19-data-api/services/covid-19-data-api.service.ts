@@ -28,7 +28,7 @@ export class Covid19DataApiService extends ApiService {
     );
   }
 
-  private getDefaultHttpHeaders(): HttpHeaders {
+  getDefaultHttpHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'x-rapidapi-key': environment.covid19ApiKey,
