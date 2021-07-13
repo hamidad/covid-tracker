@@ -14,13 +14,11 @@ export class Covid19DataApiService extends ApiService {
     super(httpClient);
   }
 
-  getLatestCountryDataByCode(
-    code: string
-  ): Observable<LatestCountryData | Covic19DataApiResponseError> {
+  getLatestCountryDataByCode(code: string): Observable<LatestCountryData[]> {
     const headers = this.getDefaultHttpHeaders();
     const params = this.getCodeHttpParams(code);
 
-    return this.get<LatestCountryData | Covic19DataApiResponseError>(
+    return this.get<LatestCountryData[]>(
       `${environment.covid19ApiUrl}/country/code`,
       'getLatestCountryDataByCode',
       headers,
