@@ -1,0 +1,11 @@
+:host {
+  width: 100%;
+  height: 500px;
+  display: block;
+}
+
+.highcharts-chart-container {
+  width: var(--width);
+  height: var(--height);
+  display: var(--display);
+}
