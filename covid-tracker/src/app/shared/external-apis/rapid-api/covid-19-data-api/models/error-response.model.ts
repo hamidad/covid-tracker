@@ -1,4 +1,7 @@
-export interface Covic19DataApiResponseError {
-  message: string;
-  url?: string;
+export interface Covid19DataApiResponseError {
+  error: string;
+  message?: string;
+  path: string;
+  status: number
+  timestamp: string;
 }

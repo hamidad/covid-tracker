@@ -1,9 +1,11 @@
 package com.covidtrackerbackend.latestcountrydata.dal.dao;
 
+import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.constants.LatestCountryDataConstants;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
 import org.springframework.http.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,7 +30,7 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
     }
 
     @Override
-    public LatestCountryData getLatestCountryDataByCode(String code) {
+    public LatestCountryData getLatestCountryDataByCode(String code) throws Covid19Exception {
         LatestCountryData latestCountryData = getLatestCountryDataByCodeFromDB(code);
 
         if (latestCountryData == null) {
@@ -51,28 +53,34 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
     }
 
     @Override
-    public LatestCountryData getLatestCountryDataByCodeExternally(String code) {
+    public LatestCountryData getLatestCountryDataByCodeExternally(String code) throws Covid19Exception {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.set("x-rapidapi-key", LatestCountryDataConstants.RAPID_API_KEY);
+            headers.set("x-rapidapi-host", LatestCountryDataConstants.RAPID_API_HOST);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("x-rapidapi-key", LatestCountryDataConstants.RAPID_API_KEY);
-        headers.set("x-rapidapi-host", LatestCountryDataConstants.RAPID_API_HOST);
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(LatestCountryDataConstants.RAPID_API_URL)
+                    .queryParam("code", code);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(LatestCountryDataConstants.RAPID_API_URL)
-                .queryParam("code", code);
+            HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-        HttpEntity<String> entity = new HttpEntity<>("body", headers);
+            RestTemplate restTemplate = new RestTemplate();
 
-        RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<LatestCountryData[]> response = restTemplate.exchange(
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    entity,
+                    LatestCountryData[].class);
 
-        ResponseEntity<LatestCountryData[]> response = restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                entity,
-                LatestCountryData[].class);
+            LatestCountryData[] result = response.getBody();
 
-        LatestCountryData[] result = response.getBody();
-
-        return result.length > 0 ? result[result.length - 1] : null;
+            return result.length > 0 ? result[result.length - 1] : null;
+        } catch (HttpClientErrorException e) {
+            HttpStatus statusCode = e.getStatusCode();
+            throw new Covid19Exception(statusCode, e.getMessage());
+        }  catch(Exception e) {
+            throw new Covid19Exception(HttpStatus.INTERNAL_SERVER_ERROR ,e.getMessage());
+        }
     }
 }

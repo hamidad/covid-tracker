@@ -61,21 +61,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.covid19DataApiService
       .getLatestCountryDataByCode(code)
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe((response: LatestCountryData[]) => {
+      .subscribe((response: LatestCountryData) => {
         if (isDefined(response)) {
-          if (response.length > 0) {
-            this.doActionOnGetLatestCountryDataByCodeSuccess(response);
-          }
+          this.doActionOnGetLatestCountryDataByCodeSuccess(response);
         }
       });
   }
 
   private doActionOnGetLatestCountryDataByCodeSuccess(
-    latestCountryData: LatestCountryData[]
+    latestCountryData: LatestCountryData
   ): void {
     this.addDataPoint(
-      latestCountryData[0].country,
-      latestCountryData[0]?.confirmed
+      latestCountryData?.country,
+      latestCountryData?.confirmed
     );
   }
 }

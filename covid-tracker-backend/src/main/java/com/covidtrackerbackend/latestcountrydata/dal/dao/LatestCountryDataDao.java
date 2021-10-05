@@ -1,5 +1,6 @@
 package com.covidtrackerbackend.latestcountrydata.dal.dao;
 
+import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.List;
 public interface LatestCountryDataDao {
     public List<LatestCountryData> getAll();
 
-    public LatestCountryData getLatestCountryDataByCode(String code);
+    public LatestCountryData getLatestCountryDataByCode(String code) throws Covid19Exception;
 
     public LatestCountryData getLatestCountryDataByCodeFromDB(String code);
 
-    public LatestCountryData getLatestCountryDataByCodeExternally(String code);
+    public LatestCountryData getLatestCountryDataByCodeExternally(String code) throws Covid19Exception;
 }

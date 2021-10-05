@@ -1,5 +1,6 @@
 package com.covidtrackerbackend.latestcountrydata.service;
 
+import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.dal.dao.LatestCountryDataDao;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class LatestCountryDataServiceImpl implements LatestCountryDataService {
     }
 
     @Override
-    public LatestCountryData getLatestCountryDataByCode(String code) {
+    public LatestCountryData getLatestCountryDataByCode(String code) throws Covid19Exception {
         return latestCountryDataDaoImpl.getLatestCountryDataByCode(code);
     }
 }
