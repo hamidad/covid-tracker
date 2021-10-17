@@ -11,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,9 +21,10 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
     private EntityManager entityManager;
 
     @Override
-    public List<LatestCountryData> getAll() {
-        List<LatestCountryData> latestCountryDataList =
-                entityManager.createQuery("SELECT DISTINCT c FROM LatestCountryData AS c").getResultList();
+    public List<LatestCountryData> findAll() {
+        List<LatestCountryData> latestCountryDataList = entityManager
+                .createQuery("SELECT DISTINCT c FROM LatestCountryData AS c")
+                .getResultList();
 
         return  latestCountryDataList;
     }
@@ -44,10 +44,10 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
     public LatestCountryData getLatestCountryDataByCodeFromDB(String code) {
         String queryString = "SELECT DISTINCT c FROM LatestCountryData AS c WHERE c.code = :code";
 
-        TypedQuery<LatestCountryData> query = entityManager.createQuery(queryString, LatestCountryData.class);
-        query.setParameter("code", code);
-
-        List<LatestCountryData> resultList = query.getResultList();
+        List<LatestCountryData> resultList = entityManager
+                .createQuery(queryString, LatestCountryData.class)
+                .setParameter("code", code)
+                .getResultList();
 
         return !resultList.isEmpty() ? resultList.get(0) : null;
     }

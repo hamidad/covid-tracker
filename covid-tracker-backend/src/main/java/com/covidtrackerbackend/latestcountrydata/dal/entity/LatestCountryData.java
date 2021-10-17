@@ -35,10 +35,10 @@ public class LatestCountryData {
     @Column(nullable = false)
     public double longitude;
 
-    @Column(name = "last_change", nullable = false)
+    @Column(nullable = false)
     public Date lastChange;
 
-    @Column(name = "last_update", nullable = false)
+    @Column(nullable = false)
     public Date lastUpdate;
 
     public LatestCountryData() {

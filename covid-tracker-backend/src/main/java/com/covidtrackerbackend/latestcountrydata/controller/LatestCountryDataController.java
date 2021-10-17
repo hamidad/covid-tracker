@@ -3,7 +3,6 @@ package com.covidtrackerbackend.latestcountrydata.controller;
 import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
 import com.covidtrackerbackend.latestcountrydata.service.LatestCountryDataService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/v1")
 public class LatestCountryDataController {
 
-    @Autowired
-    private LatestCountryDataService latestCountryDataService;
+    private final LatestCountryDataService latestCountryDataService;
+
+    public LatestCountryDataController(LatestCountryDataService latestCountryDataService) {
+        this.latestCountryDataService = latestCountryDataService;
+    }
 
     @GetMapping("/country/all")
     public List<LatestCountryData> index() {
