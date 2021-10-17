@@ -2,11 +2,8 @@ package com.covidtrackerbackend.latestcountrydata.service;
 
 import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
-@Component
 public interface LatestCountryDataService {
     public List<LatestCountryData> findAll();
 
