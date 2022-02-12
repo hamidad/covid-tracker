@@ -1,5 +1,6 @@
 package com.covidtrackerbackend.latestcountrydata.dal.dao;
 
+import com.covidtrackerbackend.constants.RapidApiConstants;
 import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.constants.LatestCountryDataConstants;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
@@ -57,8 +58,8 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.set("x-rapidapi-key", LatestCountryDataConstants.RAPID_API_KEY);
-            headers.set("x-rapidapi-host", LatestCountryDataConstants.RAPID_API_HOST);
+            headers.set("x-rapidapi-key", RapidApiConstants.RAPID_API_KEY);
+            headers.set("x-rapidapi-host", RapidApiConstants.RAPID_API_HOST);
 
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(LatestCountryDataConstants.RAPID_API_URL)
                     .queryParam("code", code);

@@ -5,8 +5,6 @@ import com.covidtrackerbackend.dailycountryreport.dal.model.DailyReportByCountry
 import com.covidtrackerbackend.exceptions.Covid19Exception;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class DailyReportByCountryServiceImpl implements DailyReportByCountryService {
 
