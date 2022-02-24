@@ -4,6 +4,7 @@ import com.covidtrackerbackend.constants.RapidApiConstants;
 import com.covidtrackerbackend.exceptions.Covid19Exception;
 import com.covidtrackerbackend.latestcountrydata.constants.LatestCountryDataConstants;
 import com.covidtrackerbackend.latestcountrydata.dal.entity.LatestCountryData;
+import com.covidtrackerbackend.utils.rapidapi.RapidApiHttpHeadersBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpClientErrorException;
@@ -56,15 +57,17 @@ public class LatestCountryDataDaoImpl implements LatestCountryDataDao {
     @Override
     public LatestCountryData getLatestCountryDataByCodeExternally(String code) throws Covid19Exception {
         try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            headers.set("x-rapidapi-key", RapidApiConstants.RAPID_API_KEY);
-            headers.set("x-rapidapi-host", RapidApiConstants.RAPID_API_HOST);
+            RapidApiHttpHeadersBuilder rapidApiHttpHeadersBuilder = new RapidApiHttpHeadersBuilder()
+                    .createHttpHeaders()
+                    .setHttpHeadersAcceptApplicationJson()
+                    .setHttpHeadersKey()
+                    .setHttpHeadersHost();
 
-            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(LatestCountryDataConstants.RAPID_API_URL)
+            UriComponentsBuilder builder = UriComponentsBuilder
+                    .fromHttpUrl(LatestCountryDataConstants.RAPID_API_URL)
                     .queryParam("code", code);
 
-            HttpEntity<String> entity = new HttpEntity<>("body", headers);
+            HttpEntity<String> entity = new HttpEntity<>("body", rapidApiHttpHeadersBuilder.getHttpHeaders());
 
             RestTemplate restTemplate = new RestTemplate();
 
