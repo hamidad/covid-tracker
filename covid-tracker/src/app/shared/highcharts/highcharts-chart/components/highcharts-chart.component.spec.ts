@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HighchartsChartComponent } from './highcharts-chart.component';
@@ -8,9 +9,9 @@ describe('HighchartsChartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HighchartsChartComponent ]
-    })
-    .compileComponents();
+      declarations: [HighchartsChartComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
