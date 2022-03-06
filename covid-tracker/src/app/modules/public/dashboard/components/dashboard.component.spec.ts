@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+
+import { SharedModule } from 'src/app/shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HighchartsModule } from 'src/app/shared/highcharts/highcharts.module';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -14,8 +14,12 @@ describe('DashboardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DashboardComponent],
-      imports: [HttpClientModule],
-      providers: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        SharedModule,
+        BrowserAnimationsModule,
+        HighchartsModule,
+      ],
     }).compileComponents();
   });
 
